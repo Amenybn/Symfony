@@ -96,7 +96,13 @@ class AuthorController extends AbstractController
         return $this->redirectToRoute('affichAuthor');
     }
 
-    
+    #[Route('/deleteAuthorsWithZeroBooks', name: 'deleteAuthorsWithZeroBooks')]
+    public function deleteAuthorsWithZeroBooks(AuthorRepository $authorRepository): Response
+    {
+        $deletedCount = $authorRepository->deleteAuthorsWithZeroBooks();
+
+        return $this->redirectToRoute('affichAuthor'); 
+    }
     
 
 

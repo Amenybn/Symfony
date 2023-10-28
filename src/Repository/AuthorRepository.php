@@ -37,6 +37,15 @@ class AuthorRepository extends ServiceEntityRepository
         ->getResult();
 
     }
+    public function deleteAuthorsWithZeroBooks()
+    {
+        $em = $this->getEntityManager();
+
+        $dql = "DELETE FROM App\Entity\Author a WHERE a.nbBooks = 0";
+        $query = $em->createQuery($dql);
+
+        return $query->execute();
+    }
 
 
    
