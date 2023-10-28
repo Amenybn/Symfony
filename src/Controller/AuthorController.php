@@ -96,7 +96,30 @@ class AuthorController extends AbstractController
         return $this->redirectToRoute('affichAuthor');
     }
 
-   
+    #[Route('/showdelete', name: 'showdelete')]
+    public function showdelete(AuthorRepository $authorRepository , Request $req): Response
+    {    
+        $authorRepository->deleteZero();
+         $form= $this->createForm(MinMaxType::class);
+         $form->handleRequest($req);
+         $author = $authorRepository->findAll();
+         
+         $author = $authorRepository->triaauthor();
+         if($form->isSubmitted()){
+            $min = $form->get('min')->getData();
+            $max = $form->get('max')->getData();
+             $authors=$authorRepository->searchNbBook($min , $max);
+ 
+             return $this->renderForm('author/affichAuthor.html.twig', [
+                 'author' => $authors,
+                 'f'=> $form
+             ]);}
+        
+        return $this->renderForm('author/affichAuthor.html.twig', [
+            'author'=> $author,
+            'f'=> $form
+        ]);
+    }
     
 
 
