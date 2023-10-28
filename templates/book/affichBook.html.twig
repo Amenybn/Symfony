@@ -1,0 +1,38 @@
+{{form_start(f)}}
+{{form_label(f)}}
+{{form_end(f)}}
+<table border="3">
+    <tr>
+        <td>title</td>
+        <td>category</td>
+        <td>publicationDate</td>
+        <td>published</td>
+        <td>author</td>
+        <td>nbBooks</td>
+        <td>UpdateBook</td>
+        <td>DeleteBook</td>
+    </tr>
+    {% for i in book %}
+    <tr>
+        <td>{{i.title}}</td>
+        <td>{{i.category}}</td>
+        <td>{{i.publicationDate|date('Y-m-d H:i:s')}}</td>
+        <td>{{i.published}}</td>
+        <td>{{i.author.username}}</td>
+        <td>{{i.author.nbBooks}}</td>
+        <td><a href="{{path('updateBook',{'id':i.id})}}">updateBook</a></td>
+        <td><a href="{{path('deleteBook',{'id':i.id})}}">deleteBook</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<div style="text-align: center;">
+    <p>Number of books published: {{ publishedCount }}</p>
+    <p>Number of books unpublished: {{ unpublishedCount }}</p>
+    <p>Number of Science Fiction books: {{ scienceFictionCount }}</p>
+</div>
+{% for book in booksBetweenDates %}
+    <p>{{ book.title }}</p>
+    <p> {{ book.publicationDate|date('Y-m-d') }}</p>
+    <p>Author: {{ book.author.username }}</p>
+    <p>***************</p>
+{% endfor %}
